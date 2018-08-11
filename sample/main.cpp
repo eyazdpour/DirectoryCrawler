@@ -1,7 +1,6 @@
 #include <iostream>
-
+using namespace std;
 int main()
 {
-    std::cout<<"hiii"<<std::endl;
-     
+    cout<<"This will be a sample use of DirectoryCrawler"<<endl;
 }
