@@ -7,8 +7,8 @@ class File
 
   public:
     File(string name, string extension, string path);
-    fullName(void);
-    fullPath(void);
+    string fullName(void);
+    string fullPath(void);
 
   private:
     string name;
@@ -23,11 +23,11 @@ File::File(string name, string extension, string path)
     extension = extension;
     path = path;
 }
-File::fullName(void)
+string File::fullName(void)
 {
     return name + '.' + extension;
 }
-File::fullPath(void)
+string File::fullPath(void)
 {
     return path + '\\' + name + '.' + extension;
 }
