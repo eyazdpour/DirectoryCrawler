@@ -14,3 +14,8 @@ int main()
         cout<<folders[i].get_name()<<endl;
     }
 }
+/************************
+ * dataStructure.h:
+ *   Folder class is something more than enough and should be removed ASAP.
+ *   We should only have a Folders Class including of a vector<string> prop.
+ ***********************/
