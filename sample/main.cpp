@@ -1,20 +1,29 @@
-#include <string>
 #include <iostream>
-// #include </usr/include/c++/5.3.0/experimental/filesystem>
-#include "../core/crawler.h"
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+ 
+#include <sys/types.h>
+#include <dirent.h>
+ 
+typedef std::vector<std::string> stringvec;
 
-// namespace fs = std::filesystem;
-using namespace std;
+void read_directory(const std::string& name, stringvec& v)
+{
+    DIR* dirp = opendir(name.c_str());
+    struct dirent * dp;
+    while ((dp = readdir(dirp)) != NULL) {
+         if(dp->d_type==16) //for windows only
+        v.push_back(dp->d_name);
+        
+    }
+    closedir(dirp);
+}
 int main()
 {
-    
-    cout<<"This will be a sample use of DirectoryCrawler\n*******************"<<endl;
-    // Crawler c = Crawler("hello");
-    // cout<<c.getDirAddress()<<endl;
-
-    // std::string path = "C:/Erfan";
-    // for (auto & p : std::experimental::filesystem::directory_iterator(path))
-    //     std::cout << p << std::endl;
-
-    
+    stringvec v;
+    read_directory("C:/$Recycle.Bin", v);
+    std::copy(v.begin(), v.end(),
+         std::ostream_iterator<std::string>(std::cout, "\n"));
 }
