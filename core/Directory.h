@@ -40,6 +40,9 @@ class Directory
 //CONSTRUCTOR:
 Directory::Directory(string path)
 {
+    if(path=="." || path==".." || path.find("./")!= string::npos || path.find("../")!= string::npos ){
+        throw std::invalid_argument( "Relative path is not supported!" );
+    }
     this->path = path;
 }
 
