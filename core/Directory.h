@@ -1,10 +1,10 @@
 #ifndef DIRECTORY_H
 #define DIRECTORY_H
 
+#include <typeinfo>
 #include <vector>
 #include <dirent.h>
 #include "./File.h"
-
 
 using namespace std;
 
@@ -75,8 +75,12 @@ void Directory::crawl()
     while ((dp = readdir(dirp)) != NULL)
     {
         if (dp->d_type == DT_DIR)
-            this->directories.push_back(Directory(dp->d_name));
-        else if(dp->d_type == DT_REG)
+        {
+            string d_name = (string)(dp->d_name);
+            if (d_name != "." && d_name != "..")
+                this->directories.push_back(Directory(d_name));
+        }
+        else if (dp->d_type == DT_REG)
             this->files.push_back(File(dp->d_name));
     }
     closedir(dirp);
