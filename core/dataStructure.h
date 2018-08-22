@@ -35,30 +35,6 @@ string File::fullPath(void)
 #endif
 
 
-#ifndef FOLDER_H
-#define FOLDER_H
-
-using namespace std;
-class Folder
-{
-    public:
-        Folder(string name);
-        string get_name(void);
-    private:
-        string name;
-};
-
-// Member functions definitions including constructor
-Folder::Folder(string name){
-    Folder::name = name;
-}
-string Folder::get_name(){
-    return name;
-}
-
-
-#endif
-
 #ifndef FOLDERS_H
 #define FOLDERS_H
 
@@ -68,24 +44,25 @@ using namespace std;
 class Folders
 {
     public:
-        Folders(string path,vector<Folder> folders);
+        Folders(string path,vector<string> folders);
         string get_path();
-        vector<Folder> get_folders();
+        vector<string> get_folders();
 
     private:
         string path;
-        vector<Folder> folders;
+        vector<string> folders;
 };
-Folders::Folders(string path,vector<Folder> folders){
+
+// Member functions definitions including constructor
+Folders::Folders(string path,vector<string> folders){
     Folders::path = path;
     Folders::folders = folders;
 }
 string Folders::get_path(){
     return path;
 }
-vector<Folder> Folders::get_folders(){
+vector<string> Folders::get_folders(){
     return folders;
 }
-// Member functions definitions including constructor
 
 #endif
