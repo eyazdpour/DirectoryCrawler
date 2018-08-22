@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <dirent.h>
-#include "dataStructure.h"
 
 using namespace std;
 class Crawler

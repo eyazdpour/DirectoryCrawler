@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <dirent.h>
-#include "./dataStructure.h"
+#include "./File.h"
+
 
 using namespace std;
 
@@ -11,10 +12,9 @@ class Directory
 {
   public:
     //CONSTRUCTOR
-    Directory(int directoryId, string path);
+    Directory(string path);
 
     //GETTERS
-    int get_directoryId();
     string get_path();
     string get_name();
     vector<File> get_files();
@@ -30,7 +30,6 @@ class Directory
     string list_files();
 
   private:
-    int directoryId;
     string path;
     string name;
     vector<File> files;
@@ -39,17 +38,12 @@ class Directory
 
 // Member functions definitions including constructor
 //CONSTRUCTOR:
-Directory::Directory(int directoryId, string path)
+Directory::Directory(string path)
 {
-    this->directoryId = directoryId;
     this->path = path;
 }
 
 //GETTERS:
-int Directory::get_directoryId()
-{
-    return this->directoryId;
-}
 string Directory::get_path()
 {
     return this->path;
@@ -78,18 +72,12 @@ void Directory::crawl()
 {
     DIR *dirp = opendir(this->path.c_str());
     struct dirent *dp;
-    int id = 0;
     while ((dp = readdir(dirp)) != NULL)
     {
-        if (dp->d_type == DT_REG)
-        {
-            this->directories.push_back(Directory(1, dp->d_name));
-            id++;
-        }
-        else if(dp->d_type == DT_DIR){
-            this->files.push_back(File(1, dp->d_name)); //NEW CLASS OF FILE NEED TO BE CREATED
-            id++;
-        }
+        if (dp->d_type == DT_DIR)
+            this->directories.push_back(Directory(dp->d_name));
+        else if(dp->d_type == DT_REG)
+            this->files.push_back(File(dp->d_name));
     }
     closedir(dirp);
 }
@@ -111,8 +99,8 @@ string Directory::list_directories()
 string Directory::list_files()
 {
     string list = "Path: " + this->path + "\n";
-    // for (int i = 0; i < this->files.size(); i++)
-    //     list += "\t" + this->files[i].path + "\n";
+    for (int i = 0; i < this->files.size(); i++)
+        list += "\t" + this->files[i].name + "\n";
     return list;
 }
 
