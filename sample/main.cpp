@@ -2,8 +2,6 @@
 #include <string>
 #include <vector>
 
-#include "../core/crawler.h"
-#include "../core/dataStructure.h"
 #include "../core/Directory.h"
 
 int main()
