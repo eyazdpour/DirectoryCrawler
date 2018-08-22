@@ -1,9 +1,11 @@
 #ifndef DIRECTORY_H
 #define DIRECTORY_H
 
-#include <typeinfo>
+#include <algorithm>
 #include <vector>
+#include <sstream>
 #include <dirent.h>
+
 #include "./File.h"
 
 using namespace std;
@@ -16,11 +18,11 @@ class Directory
 
     //GETTERS
     string get_path();
-    string get_name();
     vector<File> get_files();
     vector<Directory> get_directories();
 
     //METHODS
+    string get_name();
     void save(); //to file in json format or xml
     void load(); //from file in json format or xml
     void crawl();
@@ -31,7 +33,6 @@ class Directory
 
   private:
     string path;
-    string name;
     vector<File> files;
     vector<Directory> directories;
 };
@@ -40,8 +41,10 @@ class Directory
 //CONSTRUCTOR:
 Directory::Directory(string path)
 {
-    if(path=="." || path==".." || path.find("./")!= string::npos || path.find("../")!= string::npos ){
-        throw std::invalid_argument( "Relative path is not supported!" );
+    std::replace(path.begin(), path.end(), '/', '\\');
+    if (path == "." || path == ".." || path.find(".\\") != string::npos || path.find("..\\") != string::npos)
+    {
+        throw std::invalid_argument("Relative path is not supported!");
     }
     this->path = path;
 }
@@ -50,10 +53,6 @@ Directory::Directory(string path)
 string Directory::get_path()
 {
     return this->path;
-}
-string Directory::get_name()
-{
-    return this->name;
 }
 vector<File> Directory::get_files()
 {
@@ -65,6 +64,17 @@ vector<Directory> Directory::get_directories()
 }
 
 //METHODS:
+string Directory::get_name()
+{
+    std::stringstream ss(this->path);
+    std::string item;
+    std::vector<std::string> splittedStrings;
+    while (std::getline(ss, item, '\\'))
+    {
+        splittedStrings.push_back(item);
+    }
+    return splittedStrings[splittedStrings.size() - 1];
+}
 void Directory::save()
 {
 }
