@@ -1,34 +1,61 @@
 #ifndef FILE_H
 #define FILE_H
 
+#include <vector>
+#include <sstream>
+
 using namespace std;
 class File
 {
     friend class Directory;
 
   public:
+    //CONSTRUCTOR
     File(string name);
-    string fullName(void);
-    string fullPath(void);
+
+    //GETTERS
+    string get_name();
+    string get_extension();
+
+    //METHODS
+    string get_fullName(void);
 
   private:
     string name;
     string extension;
-    string path;
 };
 
 // Member functions definitions including constructor
-File::File(string name)
+//CONSTRUCTOR:
+File::File(string fileName)
 {
-    File::name = name;
+    File->name = "";
+    std::stringstream ss(this->path);
+    std::string item;
+    std::vector<std::string> splittedStrings;
+    while (std::getline(ss, item, '.'))
+        splittedStrings.push_back(item);
+
+    for (int i = 0; i < splittedStrings.size() - 1; i++)
+        File->name += splittedStrings[i];
+
+    File->extension = splittedStrings[splittedStrings.size() - 1];
 }
-string File::fullName(void)
+
+//GETTERS:
+string File::get_name()
 {
-    return name + '.' + extension;
+    return File->name;
 }
-string File::fullPath(void)
+string File::get_extension()
 {
-    return path + '\\' + name + '.' + extension;
+    return File->extension;
+}
+
+//METHODS:
+string File::get_fullName(void)
+{
+    return File->name + '.' + File->extension;
 }
 
 #endif
