@@ -12,6 +12,8 @@ using namespace std;
 
 class Directory
 {
+    friend class Crawler;
+
   public:
     //CONSTRUCTOR
     Directory(string path);
@@ -35,6 +37,7 @@ class Directory
     string path;
     vector<File> files;
     vector<Directory> directories;
+    bool isCrawled = false;
 };
 
 // Member functions definitions including constructor
@@ -97,6 +100,7 @@ void Directory::crawl()
             this->files.push_back(File(dp->d_name));
     }
     closedir(dirp);
+    this->isCrawled=true;
 }
 bool Directory::has_directories()
 {
