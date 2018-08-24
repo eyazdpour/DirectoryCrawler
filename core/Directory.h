@@ -12,7 +12,7 @@ using namespace std;
 
 class Directory
 {
-    friend class Crawler;
+    friend class Recursive;
 
   public:
     //CONSTRUCTOR
