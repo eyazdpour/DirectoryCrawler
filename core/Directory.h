@@ -108,16 +108,16 @@ bool Directory::has_files()
 }
 string Directory::list_directories()
 {
-    string list = "Path: " + this->path + "\n";
+    string list = "";
     for (int i = 0; i < this->directories.size(); i++)
         list += "\t" + this->directories[i].path + "\n";
     return list;
 }
 string Directory::list_files()
 {
-    string list = "Path: " + this->path + "\n";
+    string list = "";
     for (int i = 0; i < this->files.size(); i++)
-        list += "\t" + this->files[i].name + "\n";
+        list += "\t" + this->files[i].get_fullName() + "\n";
     return list;
 }
 
