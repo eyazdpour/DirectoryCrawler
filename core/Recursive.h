@@ -8,13 +8,13 @@ class Recursive
 {
 public:
   //METHODS
-  void  crawl(Directory &dir);
-  string  list_directories(Directory &dir);
+  void crawl(Directory &dir);
+  string list_directories(Directory &dir);
 };
 
 // Member functions definitions
 //METHODS:
-void  Recursive::crawl(Directory &dir)
+void Recursive::crawl(Directory &dir)
 {
   if (!(dir.isCrawled))
     dir.crawl();
@@ -23,24 +23,26 @@ void  Recursive::crawl(Directory &dir)
 
   for (int i = 0; i < dir.directories.size(); i++)
   {
-    if (dir.directories.size() > 0)
+    if (dir.has_directories())
       this->crawl(dir.directories[i]);
   }
 }
 string Recursive::list_directories(Directory &dir)
 {
-  string list = "";
+  string list = dir.path;
 
   for (int i = 0; i < dir.directories.size(); i++)
   {
-    if (dir.directories.size() > 0)
-    {
-      list += i + "." + dir.get_name();
-      list += this->list_directories(dir.directories[i]);
-    }
-    else
-      list += "--------------END CHILD--------------";
+    list += "\n\t\t" + dir.directories[i].get_name();
   }
+  list += "\n--------------------------------\n";
+
+  for (int i = 0; i < dir.directories.size(); i++)
+  {
+    if (dir.has_directories())
+      list += this->list_directories(dir.directories[i]);
+  }
+
   return list;
 }
 

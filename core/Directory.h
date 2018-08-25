@@ -59,11 +59,11 @@ string Directory::get_path()
 }
 vector<File> Directory::get_files()
 {
-    return this->files;
+    return this->files; //returning a copy of vector
 }
 vector<Directory> Directory::get_directories()
 {
-    return this->directories;
+    return this->directories; //returning a copy of vector
 }
 
 //METHODS:
@@ -94,13 +94,13 @@ void Directory::crawl()
         {
             string d_name = (string)(dp->d_name);
             if (d_name != "." && d_name != "..")
-                this->directories.push_back(Directory(d_name));
+                this->directories.push_back(Directory(this->path + "\\" + d_name));
         }
         else if (dp->d_type == DT_REG)
             this->files.push_back(File(dp->d_name));
     }
     closedir(dirp);
-    this->isCrawled=true;
+    this->isCrawled = true;
 }
 bool Directory::has_directories()
 {
