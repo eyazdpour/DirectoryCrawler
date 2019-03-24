@@ -6,7 +6,7 @@
 
 int main()
 {
-    Directory *d1 = new Directory("C:/Erfan/Music");
+    Directory *d1 = new Directory("C:\\Users");
 
     //cout<<d1->get_name()<<endl;
     // std::cout << "----------Directories----------\n"
